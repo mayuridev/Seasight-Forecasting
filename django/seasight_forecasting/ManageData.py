@@ -64,7 +64,7 @@ def GetDataFromAPI():
     writeVerbose(message)
     return data
 
-def GetDataFromRegion(data, region):
+def GetRegionFromFile(region):
     regions = {
         "North Atlantic Ocean": global_vars.north_atlantic_region_path,
         "South Atlantic Ocean": global_vars.south_atlantic_region_path,
@@ -75,9 +75,12 @@ def GetDataFromRegion(data, region):
     }
     regionFile = gpd.read_file(regions[region])
     pol = cascaded_union(regionFile['geometry'])
+    return pol
+
+def GetDataFromRegion(data, region):
     pol_gpd= gpd.GeoDataFrame()
     pol_gpd['geometry'] = None
-    pol_gpd.loc[0,'geometry'] = pol
+    pol_gpd.loc[0,'geometry'] = region
     gdf = gpd.GeoDataFrame(data, geometry=gpd.points_from_xy(data.lon, data.lat))
     data = gpd.sjoin(gdf, pol_gpd, op = 'within')
     data = data.drop(['geometry', 'index_right'], axis=1)
