@@ -46,18 +46,18 @@ def GenerateHistoricKML(region, dateFrom, check, dateTo):
     data = LoadData(global_vars.historic_file_path)
     writeVerbose('Data loading DONE')
     data = PrepareData(data)
-    print(data)
+    logprint(data)
     print('ORIGINAL DATA')
 
     message = 'Start date and region filtering...'
     print(message)
     writeVerbose(message)
     data = GetDataInDateRange(data, dateFrom, check, dateTo)
-    print(data)
+    logprint(data)
     print('DATA AFTER DATE FILTER')
 
     data = GetDataFromRegion(data, region)
-    print(data)
+    logprint(data)
     print('DATA AFTER REGION FILTER')
     writeVerbose('Data filtering DONE')
 
@@ -83,14 +83,14 @@ def GenerateRealTimeKML(region):
     data = GetDataFromAPI()
     data = PrepareData(data)
     data = data.drop(['time'], axis=1)
-    print(data)
+    logprint(data)
     print('ORIGINAL DATA')
 
     message = 'Start region filtering...'
     print(message)
     writeVerbose(message)
     data = GetDataFromRegion(data, region)
-    print(data)
+    logprint(data)
     print('DATA AFTER REGION FILTERING')
     writeVerbose('Data filtering DONE')
 
@@ -106,14 +106,14 @@ def GenerateFutureKML(region):
     data = data[data.time == data.time.tail(1)[data.time.tail(1).index._start]]
     data = PrepareData(data)
     data = data.drop(['time'], axis=1)
-    print(data)
+    logprint(data)
     print('ORIGINAL DATA')
 
     message = 'Start region filtering...'
     print(message)
     writeVerbose(message)
     data = GetDataFromRegion(data, region)
-    print(data)
+    logprint(data)
     print('DATA AFTER REGION FILTERING')
     writeVerbose('Data filtering DONE')
 
@@ -121,7 +121,7 @@ def GenerateFutureKML(region):
     print(message)
     writeVerbose(message)
     data = PredictedData(data)
-    print(data)
+    logprint(data)
     print('PREDICTED DATA')
     message = 'Prediction DONE!'
     print(message)

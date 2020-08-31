@@ -14,14 +14,11 @@
                 <a href="/"><img src="{% static 'logos/SF-logo.png' %}" class="logo2"></a>
             </div>
             <div class="head_banner">
-                <div class="crop">
-                    <img src="{% static 'img/marine_temp.jpg' %}" class="header_img">
-                </div>
+                <img src="{% static 'img/marine_temp_header.jpg' %}" class="header_img">
             </div>
         </div>
 
         <h1>Real time visualization</h1>
-        {{ response }}
         <div class="container">
             <div>
                 {% include "./canvas.html" %}
@@ -29,12 +26,17 @@
             <div>
                 <form action="{% url 'present' %}" method="POST" id="formKML" name="GenerateKML" onsubmit="return onSubmit();">
                     {% csrf_token %}
-                    <div>
-                        <span>Region: </span>
-                        <input type="text" id="region" name="region" value="--" readonly="readonly">
-                        <span id="regionVal" class="textVal"></span>
-                    </div>
-                    <input type="submit" onclick="return validateForm();">
+                    <table>
+                        <tr>
+                            <td>Region:</td>
+                            <td><input type="text" id="region" name="region" value="--" readonly="readonly"></td>
+                            <td><span id="regionVal" class="textVal"></span></td>
+                        </tr>
+                        <tr>
+                            <td><input type="submit" value="Submit" name="Submit" onclick="return validatePastForm();"></td>
+                            <td><input type="submit" value="Stop" name="Stop"></td>
+                        </tr>
+                    </table>
                 </form>
                 <div id="verbose" class="verbose"></div>
                 <div id="spinner" class="spinnercnt"><img src="{% static 'img/spinner.gif' %}" class="spinner"></div>

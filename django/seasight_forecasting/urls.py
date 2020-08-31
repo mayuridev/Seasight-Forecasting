@@ -10,4 +10,6 @@ urlpatterns = [
     path('present/', views.present, name='present'),
     path('future/', views.future, name='future'),
     path('demo/', views.demo, name='demo'),
+    path('clean_KML/', views.clean_KML, name='clean_KML'),
+    path('clean_ALL/', views.clean_ALL, name='clean_ALL'),
 ]

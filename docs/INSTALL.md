@@ -17,7 +17,7 @@
 
 4. Clone this repository
    ```
-   git clone https://github.com/LiquidGalaxyLAB/Seasight-Forecasting.git
+   git clone https://github.com/rascundampelcuf/Seasight-Forecasting.git
    ```
 
 5. Move the API credentials file to HOME
@@ -25,9 +25,9 @@
    mv Seasight-Forecasting/.cdsapirc $HOME
    ```
 
-6. Go inside the newly created folder
+6. Go inside the Django folder
    ```
-   cd Seasight-Forecasting
+   cd Seasight-Forecasting/django
    ```
 
 7. Create virtualenv with python3
@@ -41,37 +41,30 @@
    source <"VIRTUALENV FOLDER">/bin/activate
    ```
 
-2. Change to Django folder
-   ```
-   cd django
-   ```
-
-3. Install requirements
+2. Install requirements
    ```
    pip3 install -r requirements.txt
    ```
 
-4. Add server as allowed host adding Server's IP inside `ALLOWED_HOSTS` in `Seasight-Forecasting/djang/mysite/settings.py` as the following:
+3. Add server as allowed host adding Server's IP inside `ALLOWED_HOSTS` in `Seasight-Forecasting/djang/mysite/settings.py` as the following:
    ```
    ALLOWED_HOSTS = ['XXX.XXX.XXX.XXX']
    ```
 
-5. Apply migrations
+4. Apply migrations
    ```
    python manage.py migrate
    ```
 
 ## RUN
-1. Modify `app.conf` file adding the Server's IP and the Master's IP
+1. Modify `app.conf` file adding the Server's IP and the Master's IP and pass
 
-2. Ensure you are inside `Seasight-Forecasting/django`
+2. Run the script to create the necessary folder
+   ```
+   ./setMasterFiles.py
+   ```
 
 3. Run the application
     ```
-    ./startDjango.sh
+    ./startDjango.py
     ```
-
-4. Run the script
-   ```
-   ./setMasterKmlTxt.sh
-   ```

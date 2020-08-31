@@ -5,10 +5,12 @@ from seasight_forecasting import global_vars
 from seasight_forecasting.utils import *
 from seasight_forecasting.ConfigurationFile import *
 from seasight_forecasting.CaseMethods import *
+from seasight_forecasting.Demo import *
 
 def index(request):
     LoadConfigFile()
     cleanVerbose()
+    resetView()
     return render(request, 'index.html', {})
 
 def run_historic(request):
@@ -18,8 +20,20 @@ def run_historic(request):
     dateTo = request.POST.get('dateTo')
     region = GetRegionFromFile(request.POST.get('region'))
     GenerateHistoricKML(region, dateFrom, check, dateTo)
-    flyToRegion(region)
     startSendKMLThread()
+    flyToRegion(region)
+
+def run_present(request):
+    region = GetRegionFromFile(request.POST.get('region'))
+    GenerateRealTimeKML(region)
+    sendKmlToLGCommon(global_vars.kml_destination_filename)
+    flyToRegion(region)
+
+def run_future(request):
+    region = GetRegionFromFile(request.POST.get('region'))
+    GenerateFutureKML(region)
+    sendKmlToLGCommon(global_vars.kml_destination_filename)
+    flyToRegion(region)
 
 def stop_thread():
     stopSendKMLThread()
@@ -32,6 +46,7 @@ def past(request):
     if request.method == 'POST':
         if request.POST.get("Submit") == "Submit":
             cleanVerbose()
+            writeVerbose('Expect several minutes to complete...')
             run_historic(request)
         if request.POST.get("Stop") == "Stop":
             stop_thread()
@@ -41,25 +56,41 @@ def past(request):
 def present(request):
     LoadConfigFile()
     if request.method == 'POST':
-        cleanVerbose()
-        region = GetRegionFromFile(request.POST.get('region'))
-        GenerateRealTimeKML(region)
-        flyToRegion(region)
-        sendKmlToLG(global_vars.kml_destination_filename)
+        if request.POST.get("Submit") == "Submit":
+            cleanVerbose()
+            writeVerbose('Expect several minutes to complete...')
+            run_present(request)
+        if request.POST.get("Stop") == "Stop":
+            stop_thread()
+
     return render(request, 'present.html', {})
 
 def future(request):
     LoadConfigFile()
     if request.method == 'POST':
-        cleanVerbose()
-        region = GetRegionFromFile(request.POST.get('region'))
-        GenerateFutureKML(region)
-        flyToRegion(region)
-        sendKmlToLG(global_vars.kml_destination_filename)
+        if request.POST.get("Submit") == "Submit":
+            cleanVerbose()
+            writeVerbose('Expect several minutes to complete...')
+            run_future(request)
+        if request.POST.get("Stop") == "Stop":
+            stop_thread()
+
     return render(request, 'future.html', {})
 
 def demo(request):
     LoadConfigFile()
-    #if request.method == 'POST':
-        #GenerateDemo()
+    if request.method == 'POST':
+        if request.POST.get("Start") == "Start":
+            cleanVerbose()
+            GenerateDemo()
+        if request.POST.get("Stop") == "Stop":
+            StopDemo()
+    return render(request, 'demo.html', {})
+
+def clean_KML(request):
+    cleanKMLFiles()
+    return HttpResponseRedirect("/")
+
+def clean_ALL(request):
+    cleanAllKMLFiles()
     return HttpResponseRedirect("/")

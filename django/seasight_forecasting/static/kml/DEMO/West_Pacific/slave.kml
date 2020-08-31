@@ -4,12 +4,12 @@
       <ScreenOverlay>
         <name>Colorbar</name>
         <Icon>
-          <href>http://X.X.X.X:8000/static/img/colorbar.png</href>
+          <href>http://lg1:81/SF/colorbar.png</href>
         </Icon>
-        <overlayXY x="0" y="0" xunits="fraction" yunits="fraction"/>
-        <screenXY x="0.02" y="0.02" xunits="fraction" yunits="fraction"/>
+        <overlayXY x="0" y="1" xunits="fraction" yunits="fraction"/>
+        <screenXY x="0.75" y="0.8" xunits="fraction" yunits="fraction"/>
         <rotationXY x="0" y="0" xunits="fraction" yunits="fraction"/>
-        <size x="0" y="0" xunits="fraction" yunits="fraction"/>
+        <size x="0.25" y="0.6" xunits="fraction" yunits="fraction"/>
       </ScreenOverlay>
     </Folder>
   </Document>

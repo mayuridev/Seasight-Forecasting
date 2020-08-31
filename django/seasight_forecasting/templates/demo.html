@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/style.css' %}">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        function onSubmit() {
+            enableSpinner();
+            return true;
+        }
+
+        function checkVerbose() {
+            jQuery.get("../static/scripts/verbose.txt",function(data){$('#verbose').html(data);});
+            setTimeout(function(){checkVerbose() },1000);
+        }
+
+        function enableSpinner() {
+            $('#spinner').show();
+        }
+
+        function disableSpinner() {
+            $('#spinner').hide();
+        }
+
+        $(document).ready(function() {
+            disableSpinner();
+        });
+
+        checkVerbose();
+    </script>
+    <head>
+        <title>Seasight Forecasting App</title>
+    </head>
+    <body>
+        <div class="header">
+            <div class="head_logo_demo">
+                <a href="/"><img src="{% static 'logos/SF-logo.png' %}" class="logo2"></a>
+            </div>
+            <div class="demo_header">
+                <center>
+                    <img src="{% static 'img/demo.jpg' %}" class="demo_img">
+                </center>
+            </div>
+        </div>
+        <div class="container">
+            <div class="summary">
+                The following DEMO will display on the Liquid Galaxy a tour through all of the water bodies all around the world showing the predicted temperatures obtained with the prediction feature of the application.<br>
+                Enjoy the DEMO! :)
+            </div>
+        </div>
+        <div class="container">
+            <div>
+                <form action="{% url 'demo' %}" method="POST" name="StartDemo" onsubmit="return onSubmit();">
+                    {% csrf_token %}
+                    <input type="submit" value="Start" name="Start" class="button">
+                    <input type="submit" value="Stop" name="Stop" id="stopButton" class="button">
+                </form>
+            </div>
+        </div>
+        <div id="verbose" class="verbose"></div>
+        <div id="spinner" class="spinnercnt"><img src="{% static 'img/spinner.gif' %}" class="spinner"></div>
+    </body>
+</html>
